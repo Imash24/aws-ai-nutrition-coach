@@ -35,14 +35,6 @@ Amazon Bedrock (Llama 3 8B Instruct)
 DynamoDB (fitness-coach-history table)
 
 
-**Project Structure**
-/project-root
-│
-├── index.html         # Frontend UI (S3 + CloudFront)
-├── function.py        # AWS Lambda backend logic
-└── README.md          # Documentation
-
-
 
 
 **How It Works**
@@ -50,21 +42,21 @@ DynamoDB (fitness-coach-history table)
 Hosted on S3
 Served globally through CloudFront
 
-2. User enters food details
+**2. User enters food details**
 Example: “I ate 3 dosas and 2 eggs”.
 
-3. API Gateway triggers Lambda
+**3. API Gateway triggers Lambda**
 Lambda receives input in JSON.
 
-4. Lambda calls Amazon Bedrock
+**4. Lambda calls Amazon Bedrock**
 Uses Llama 3 8B Instruct to generate:
 Calorie estimation
 Meal suggestions
 
-5. Lambda stores history in DynamoDB
+**5. Lambda stores history in DynamoD**B
 Each entry contains the userId, timestamp, prompt, and model response.
 
-6. Response is returned to the UI.
+**6. Response is returned to the UI.**
 
 
 **Deployment Steps**
@@ -95,6 +87,11 @@ Sort key: timestamp
 Origin = S3 website hosting endpoint
 
 **Deploy**
+
+
+
+
+
 
 
 
