@@ -66,6 +66,42 @@ Each entry contains the userId, timestamp, prompt, and model response.
 
 6. Response is returned to the UI.
 
+
+**Deployment Steps**
+1. Upload index.html to S3
+Enable static website hosting
+Make file public
+
+**2. Create Lambda function**
+Runtime: Python 3.x
+Upload function.py
+Attach IAM role with Bedrock + DynamoDB access
+
+**3. API Gateway setup**
+HTTP API
+POST /ask
+Lambda integration
+CORS enabled
+
+**4. Link frontend to backend**
+Update API URL inside index.html.
+
+**5. DynamoDB**
+Table name: fitness-coach-history
+Partition key: userId
+Sort key: timestamp
+
+**6. Create CloudFront distribution**
+Origin = S3 website hosting endpoint
+
+**Deploy**
+
+
+
+**Author**
+
+**Ashwin Venkatesan**
+AWS | DevOps | Cloud Engineer
    
 
 
