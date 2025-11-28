@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Fitness Coach 💪</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #0D0D0D;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #1A1A1A;
+      width: 95%;
+      max-width: 620px;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(255, 204, 0, 0.25);
+      animation: fadeIn 0.5s ease;
+      border: 2px solid #FFCC00;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 30px;
+      font-weight: 600;
+      color: #FFCC00;
+      margin-bottom: 10px;
+    }
+
+    p {
+      text-align: center;
+      color: #C7C7C7;
+      margin-bottom: 25px;
+      font-size: 15px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 130px;
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 15px;
+      resize: none;
+      outline: none;
+      background: #0F0F0F;
+      color: #FFCC00;
+      transition: 0.2s;
+    }
+    textarea:focus {
+      border-color: #FFCC00;
+      box-shadow: 0 0 8px rgba(255, 204, 0, 0.4);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      background: #FFCC00;
+      color: #0D0D0D;
+      font-size: 17px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 10px rgba(255, 204, 0, 0.4);
+    }
+
+    button:hover {
+      background: #e6b800;
+      transform: translateY(-2px);
+    }
+
+    #responseBox {
+      margin-top: 25px;
+      padding: 18px;
+      background: #111;
+      border-left: 4px solid #FFCC00;
+      border-radius: 10px;
+      font-size: 15px;
+      white-space: pre-wrap;
+      min-height: 50px;
+      color: #EAEAEA;
+      box-shadow: inset 0 0 8px rgba(255, 204, 0, 0.1);
+    }
+
+    .loading {
+      text-align: center;
+      font-style: italic;
+      color: #FFCC00;
+      font-size: 14px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #777;
+      font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .footer a {
+      color: #777;
+      text-decoration: none;
+      transition: 0.2s;
+      font-size: 14px;
+    }
+
+    .footer a:hover {
+      color: #FFCC00;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>AI FITNESS COACH 🎯</h2>
+    <p>Instant calorie estimates & next-level fitness advice.</p>
+
+    <textarea id="prompt" placeholder="Example: I ate 3 dosa and 2 eggs today..."></textarea>
+
+    <button onclick="askAI()">Get Fitness Advice</button>
+
+    <div id="responseBox"></div>
+
+    <div class="footer">
+      <span>Powered by Ashwin ⚡</span>
+      <a href="https://github.com/Imash24" target="_blank">GitHub Profile →</a>
+    </div>
+  </div>
+
+  <script>
+    async function askAI() {
+      const prompt = document.getElementById("prompt").value.trim();
+      const box = document.getElementById("responseBox");
+
+      if (!prompt) {
+        box.textContent = "Please enter your meal or workout detail.";
+        return;
+      }
+
+      box.innerHTML = "<div class='loading'>Analyzing your nutrition… ⏳</div>";
+
+      try {
+        const res = await fetch("https://yourapiinvokeurlhere.execute-api.ap-south-1.amazonaws.com/ask", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({ prompt: prompt, userId: "ashwin" })
+        });
+
+        const data = await res.json();
+        box.textContent = data.fitness_coach_reply || "No reply received.";
+      } catch (err) {
+        console.error(err);
+        box.textContent = "⚠️ API error. Check logs.";
+      }
+    }
+  </script>
+
+</body>
+</html>
